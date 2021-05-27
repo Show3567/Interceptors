@@ -3,17 +3,20 @@ import { interval, Subscription } from 'rxjs';
 import { AjaxBusyNotifierService } from './ajax-busy-notifier.service';
 
 @Directive({
-  selector: '[ajax-busy-indicator]'
+  // tslint:disable-next-line: directive-selector
+  selector: '[ajax-busy-indicator]',
 })
 export class AjaxBusyIndicatorDirective implements OnInit {
-
-  @Input() showDelay: number = 50;
-  @Input() hideDelay: number = 1000;
+  @Input() showDelay = 50;
+  @Input() hideDelay = 1000;
   hideTimer: Subscription;
   showTimer: Subscription;
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private abns: AjaxBusyNotifierService) {
-  }
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private abns: AjaxBusyNotifierService
+  ) {}
 
   cancelPendingHide() {
     if (this.hideTimer) {
@@ -29,38 +32,34 @@ export class AjaxBusyIndicatorDirective implements OnInit {
     }
   }
   ngOnInit() {
-    this.abns.busy.subscribe(busy => {
+    this.abns.busy.subscribe((busy) => {
       if (busy) {
         this.cancelPendingHide();
 
         // If a show is already pending, don't start a new one.
         if (!this.showTimer) {
-          this.showTimer =
-            interval(this.showDelay).subscribe(() => {
-              this.renderer.removeClass(this.el.nativeElement, 'inactive');
-              this.showTimer.unsubscribe();
-              this.showTimer = null;
-            });
+          this.showTimer = interval(this.showDelay).subscribe(() => {
+            this.renderer.removeClass(this.el.nativeElement, 'inactive');
+            this.showTimer.unsubscribe();
+            this.showTimer = null;
+          });
         }
       }
     });
 
-
-    this.abns.busy.subscribe(busy => {
+    this.abns.busy.subscribe((busy) => {
       if (!busy) {
         this.cancelPendingShow();
 
         // If a show is already pending, don't start a new one.
         if (!this.hideTimer) {
-          this.hideTimer =
-            interval(this.hideDelay).subscribe(() => {
-              this.renderer.addClass(this.el.nativeElement, 'inactive');
-              this.hideTimer.unsubscribe(); this.hideTimer = null;
-            });
+          this.hideTimer = interval(this.hideDelay).subscribe(() => {
+            this.renderer.addClass(this.el.nativeElement, 'inactive');
+            this.hideTimer.unsubscribe();
+            this.hideTimer = null;
+          });
         }
       }
-    }
-    );
+    });
   }
-
 }

@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http'
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+} from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
-import { AjaxBusyNotifierService } from './ajax-busy-notifier.service'
-
-
+import { AjaxBusyNotifierService } from './ajax-busy-notifier.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AjaxBusyIdentifierInterceptorService implements HttpInterceptor {
-
-  constructor(private abns: AjaxBusyNotifierService) { }
+  constructor(private abns: AjaxBusyNotifierService) {}
 
   requestCounter = 0;
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     this.beginRequest();
     return next.handle(req).pipe(
-      
       finalize(() => {
         this.endRequest();
       })

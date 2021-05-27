@@ -7,15 +7,13 @@ import { retry } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class RetryInterceptorService implements HttpInterceptor
-{
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
+export class RetryInterceptorService implements HttpInterceptor {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(retry(3));
-
   }
 }
-
