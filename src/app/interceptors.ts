@@ -1,11 +1,11 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
 
-import { AuthInterceptorService } from './Authentication/auth-interceptor.service';
-import { XML2JsonInterceptorService } from './ResponseFormat/xml2-json-interceptor.service';
-import { AjaxBusyIdentifierInterceptorService } from './AjaxBusyIndicator/ajax-busy-identifier-interceptor.service';
-import { RequestTimestampService } from './RequestTimestamp/request-timestamp.service';
-import { ErrorNotifierService } from './ErrorNotifier/error-notifier.service';
-import { RetryInterceptorService } from './RetryInterceptor/retry-interceptor.service';
+import { RequestTimestampService } from "./RequestTimestamp/request-timestamp.service";
+import { AjaxBusyIdentifierInterceptorService } from "./AjaxBusyIndicator/ajax-busy-identifier-interceptor.service";
+import { AuthInterceptorService } from "./Authentication/auth-interceptor.service";
+import { XML2JsonInterceptorService } from "./ResponseFormat/xml2-json-interceptor.service";
+import { ErrorNotifierService } from "./ErrorNotifier/error-notifier.service";
+import { RetryInterceptorService } from "./RetryInterceptor/retry-interceptor.service";
 
 export const interceptorProviders = [
   {
